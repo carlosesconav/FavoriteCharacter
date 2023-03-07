@@ -1,7 +1,12 @@
-"use strict"
+"use restrict";
 
 import { Router } from "express";
-import { registerUser, loginUser } from "../controllers/userController.js";
+import {
+    registerUser,
+    loginUser,
+    editUser,
+    updateUser
+} from "../controllers/userController.js";
 import cors from "cors";
 
 
@@ -12,12 +17,7 @@ route.use(cors());
 
 route.post('/api/register', registerUser);
 route.post('/api/login', loginUser);
-route.get('/api', (req, res) => {
-
-    res.json({
-        status: 200,
-        message: "Conexion exitosa"
-    });
-});
+route.get('/api/edit/:id', editUser);
+route.put('/api/update/:id', updateUser);
 
 export default route;

@@ -6,5 +6,15 @@ const app = express();
 app.use(express.json());
 app.use(user);
 
+app.get('/api', (req, res) => {
+
+    res.json({
+        status: 200,
+        message: "Conexion exitosa"
+    });
+});
+
+
+
 
 export default app;

@@ -3,22 +3,18 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import { encrypt, comparePassword } from "../config/handleBcrypt.js";
 import chalk from "chalk";
+import { data } from "../models/Data.js";
 
 
 export const registerUser = async (req, res) => {
 
     try {
 
-        console.log(chalk.green("==== Init register ===="));
+        console.log(chalk.blue("===== Init registerUser ====="));
 
         const { username, email, password } = req.body;
-
-        console.log(req.body);
-
         const hashPassword = encrypt(password);
-
         const userData = await user.findOne({ where: { email } });
-
         const userEmail = userData.email;
 
         console.log(userEmail);
@@ -46,12 +42,11 @@ export const registerUser = async (req, res) => {
             message: "El usuario ya esta registrado"
         });
 
-
     } catch (error) {
 
         return res.status(500).json({
             status: 500,
-            message: "Ha ocurrido un error en registerUser"
+            message: "Ha ocurrido un error"
         });
 
     }
@@ -62,10 +57,9 @@ export const loginUser = async (req, res) => {
 
     try {
 
-        console.log(chalk.blue("===== Init login ====="));
+        console.log(chalk.blue("===== Init loginUser ====="));
 
         const { email, password } = req.body;
-
         const userData = await user.findOne({ where: { email } });
 
         if (!userData) {
@@ -76,6 +70,7 @@ export const loginUser = async (req, res) => {
             });
 
         }
+
         const checkPassword = await comparePassword(password, userData.password);
         const userEmail = userData.email;
 
@@ -96,11 +91,102 @@ export const loginUser = async (req, res) => {
         }
 
     } catch (error) {
-        console.log("error de login: ", error)
+
         return res.status(500).json({
             status: 500,
-            message: "Ha ocurrido un error en loginUser"
+            message: "Ha ocurrido un error"
         });
+
+    }
+
+}
+
+export const editUser = async (req, res) => {
+
+    try {
+
+        console.log(chalk.blue("===== Init editUser ====="));
+
+        const { id } = req.params;
+
+        const userData = await user.findByPk(id);
+
+        if (!userData) {
+
+            return res.status(400).json({
+                status: 400,
+                message: "El usuario no ha sido encontrado"
+            });
+
+        }
+
+        const editData = {
+            name: userData.name,
+            username: userData.username,
+            email: userData.email
+        }
+
+        return res.status(200).json({
+            status: 200,
+            data: editData,
+            message: "El usuario ha sido encontrado exitosamente"
+        });
+
+    } catch (error) {
+
+        return res.status(500).json({
+            status: 500,
+            message: "Ha ocurrido un error"
+        });
+
+    }
+
+}
+
+export const updateUser = async (req, res) => {
+
+    try {
+
+        console.log(chalk.blue("===== Init updateUser ====="));
+
+        const { id } = req.params;
+        const { name, username, email } = req.body;
+        const userData = await user.findByPk(id);
+
+        if (!userData) {
+
+            return res.status(400).json({
+                status: 400,
+                message: "El usuario no ha sido encontrado"
+            });
+
+        }
+
+        userData.name = name
+        userData.username = username
+        userData.email = email
+
+        await userData.save();
+
+  
+
+        return res.status(200).json({
+            status: 200,
+            data: userData,
+            message: "El usuario ha sido actualizado exitosamente"
+        });
+
+
+
+    } catch (error) {
+
+        console.log(error);
+
+        return res.status(500).json({
+            status: 500,
+            message: "Ha ocurrido un error"
+        });
+
 
     }
 
