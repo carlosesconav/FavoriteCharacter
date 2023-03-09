@@ -1,10 +1,10 @@
 "use restrict";
 
 import { Router } from "express";
-import { 
+import {
     saveData,
-    getData 
-} from "../controllers/dataController";
+    getFavorites
+} from "../controllers/dataController.js";
 import cors from "cors";
 
 
@@ -13,7 +13,7 @@ route.use(cors());
 
 //Rutas data.
 
-route.post('/api/saveData',saveData);
-route.get('/api/getData', getData);
+route.post('/api/saveData', saveData);
+route.post('/api/getFavorites', getFavorites);
 
 export default route;

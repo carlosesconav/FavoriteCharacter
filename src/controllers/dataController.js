@@ -9,21 +9,23 @@ export const getApi = async (req, res) => {
 
 }
 
-export const getData = async (req, res) => {
+export const getFavorites = async (req, res) => {
 
     try {
 
         const { id_user } = req.body;
-        const data = await data.findAll({where: { id_user:id_user} });
+        const datas = await data.findAll({where: { id_user:id_user} });
 
         return res.status(200).json({
             status: 200,
-            data: data,
+            data: datas,
             message: "Solicitud exitosa"
         });
 
     } catch (error) {
         
+        console.log(error);
+
         return res.status(500).json({
             status: 500,
             message: "Ha ocurrido un error"
