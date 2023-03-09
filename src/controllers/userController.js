@@ -2,8 +2,8 @@ import { user } from "../models/User.js";
 import * as dotenv from "dotenv";
 dotenv.config();
 import { encrypt, comparePassword } from "../config/handleBcrypt.js";
+import jwt from "jsonwebtoken";
 import chalk from "chalk";
-import { data } from "../models/Data.js";
 
 
 export const registerUser = async (req, res) => {
@@ -76,8 +76,21 @@ export const loginUser = async (req, res) => {
 
         if (checkPassword && userEmail) {
 
+            const time = parseInt(process.env.JWT_TIME);
+            const secret = process.env.JWT_SECRET;
+            const token =
+                jwt.sign({
+                    id: userData.id,
+                    name: userData.name,
+                    username: userData.username,
+                    email: userData.email
+                }, secret, {
+                    expiresIn: time
+                });
+
             return res.status(200).json({
                 status: 200,
+                token: token,
                 message: "El usuario ha ingresado exitosamente"
             });
 
@@ -124,7 +137,7 @@ export const editUser = async (req, res) => {
             name: userData.name,
             username: userData.username,
             email: userData.email
-        }
+        };
 
         return res.status(200).json({
             status: 200,
@@ -162,13 +175,11 @@ export const updateUser = async (req, res) => {
 
         }
 
-        userData.name = name
-        userData.username = username
-        userData.email = email
+        userData.name = name;
+        userData.username = username;
+        userData.email = email;
 
         await userData.save();
-
-  
 
         return res.status(200).json({
             status: 200,
@@ -176,17 +187,12 @@ export const updateUser = async (req, res) => {
             message: "El usuario ha sido actualizado exitosamente"
         });
 
-
-
     } catch (error) {
-
-        console.log(error);
 
         return res.status(500).json({
             status: 500,
             message: "Ha ocurrido un error"
         });
-
 
     }
 
