@@ -15,25 +15,22 @@ export const registerUser = async (req, res) => {
         const { username, email, password } = req.body;
         const hashPassword = encrypt(password);
         const userData = await user.findOne({ where: { email } });
-        const userEmail = userData.email;
 
-        console.log(userEmail);
+        if (!userData) {
 
-        if (!userEmail) {
+                const registerUser = await user.create({
 
-            const registerUser = await user.create({
-
-                username: username,
-                email: email,
-                password: hashPassword
-
-            });
-
-            return res.status(200).json({
-                status: 200,
-                data: registerUser,
-                message: "El usuario ha sido registrado"
-            });
+                    username: username,
+                    email: email,
+                    password: hashPassword
+    
+                });
+    
+                return res.status(200).json({
+                    status: 200,
+                    data: registerUser,
+                    message: "El usuario ha sido registrado"
+                });
 
         }
 
@@ -43,7 +40,7 @@ export const registerUser = async (req, res) => {
         });
 
     } catch (error) {
-
+        console.log("====ERROR====", error);
         return res.status(500).json({
             status: 500,
             message: "Ha ocurrido un error"
