@@ -11,7 +11,6 @@ export const registerUser = async (req, res) => {
     try {
 
         console.log(chalk.blue("===== Init registerUser ====="));
-
         const { username, email, password } = req.body;
         const hashPassword = encrypt(password);
         const userData = await user.findOne({ where: { email } });
@@ -116,9 +115,7 @@ export const editUser = async (req, res) => {
     try {
 
         console.log(chalk.blue("===== Init editUser ====="));
-
         const { id } = req.params;
-
         const userData = await user.findByPk(id);
 
         if (!userData) {

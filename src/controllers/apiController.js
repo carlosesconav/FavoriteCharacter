@@ -37,6 +37,7 @@ export const getCharacters = async function getCharacters(req, res) {
 export const getOneCharacter = async function getOneCharacter(req, res){
 
     try {
+        console.log(chalk.bgBlue("======Init getOneCharacter======"));
         const {id} = req.params;
         const character = await axios({
 
