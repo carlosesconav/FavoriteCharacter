@@ -40,7 +40,7 @@ export const registerUser = async (req, res) => {
         });
 
     } catch (error) {
-        console.log("====ERROR====", error);
+        console.log("======Error resgisterUser======");
         return res.status(500).json({
             status: 500,
             message: "Ha ocurrido un error"
@@ -101,7 +101,7 @@ export const loginUser = async (req, res) => {
         }
 
     } catch (error) {
-
+        console.log("======Error loginUser======");
         return res.status(500).json({
             status: 500,
             message: "Ha ocurrido un error"
@@ -143,7 +143,7 @@ export const editUser = async (req, res) => {
         });
 
     } catch (error) {
-
+        console.log("======Error editUser======");
         return res.status(500).json({
             status: 500,
             message: "Ha ocurrido un error"
@@ -185,7 +185,7 @@ export const updateUser = async (req, res) => {
         });
 
     } catch (error) {
-
+        console.log("======Error updateUser======");
         return res.status(500).json({
             status: 500,
             message: "Ha ocurrido un error"

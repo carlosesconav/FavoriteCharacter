@@ -14,6 +14,6 @@ route.use(cors());
 //Rutas data.
 
 route.post('/api/saveData', saveData);
-route.post('/api/getFavorites', getFavorites);
+route.get('/api/getFavorites/:id_user', getFavorites);
 
 export default route;
