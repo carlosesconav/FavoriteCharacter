@@ -10,15 +10,11 @@ app.use(user);
 app.use(data);
 app.use(api);
 
-app.get('/api', (req, res) => {
-
-    res.json({
-        status: 200,
-        message: "Conexion exitosa"
-    });
+app.get("/api", (req, res) => {
+  res.json({
+    status: 200,
+    message: "Conexion exitosa",
+  });
 });
-
-
-
 
 export default app;

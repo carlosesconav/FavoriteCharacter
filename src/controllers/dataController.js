@@ -21,20 +21,19 @@ export const getFavorites = async (req, res) => {
         };
 
         let favorite = await axios({
-            method: "GET",
-            url: `${urlAPI}/character/${obj1.id_data}`,
-            auth: {},
-          });
-    
-          console.log(favorite.data);
-          characters.push(favorite.data);
+          method: "GET",
+          url: `${urlAPI}/character/${obj1.id_data}`,
+          auth: {},
+        });
+
+        console.log(favorite.data);
+        characters.push(favorite.data);
       }
 
       return res.status(200).json({
         status: 200,
         message: "Solicitud exitosa",
-        data: characters
-        
+        data: characters,
       });
     } else {
       return res.status(400).json({
