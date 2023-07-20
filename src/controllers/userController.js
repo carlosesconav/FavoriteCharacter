@@ -5,6 +5,7 @@ dotenv.config();
 import { encrypt, comparePassword } from "../config/handleBcrypt.js";
 import jwt from "jsonwebtoken";
 import chalk from "chalk";
+import { log } from "console";
 
 export const registerUser = async (req, res) => {
   try {
@@ -40,6 +41,7 @@ export const registerUser = async (req, res) => {
   }
 };
 
+// ---
 export const loginUser = async (req, res) => {
   try {
     console.log(chalk.blue("===== Init loginUser ====="));
@@ -161,6 +163,23 @@ export const updateUser = async (req, res) => {
     });
   } catch (error) {
     console.log("======Error updateUser======");
+    return res.status(500).json({
+      status: 500,
+      message: "Ha ocurrido un error",
+    });
+  }
+};
+
+export const logoutUser = async (req, res) => {
+  try {
+    console.log("===== Init updateUser =====");
+
+    return res.status(200).json({
+      status: 200,
+      message: "El usuario ha cerrado sesion",
+    });
+  } catch (error) {
+    console.log("======Error logoutUser======");
     return res.status(500).json({
       status: 500,
       message: "Ha ocurrido un error",
